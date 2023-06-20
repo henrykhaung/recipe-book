@@ -5,58 +5,18 @@
 </div>
 
 <hr>
+<h4>Recipes ({{ recipes.length }})</h4>
+<button type="button" class="btn" (click)="toggleGridView()"><i class="fa fa-table-cells-large"></i></button>
+<button type="button" class="btn" (click)="toggleListView()"><i class="fa fa-list"></i></button>
 
-<!-- <div class="row">
+<div class="row">
     <div class="col-xs-12">
-        <a href="#" class="list-group-item list-group-item-action clearfix" *ngFor="let recipe of recipes">
-            <div class="pull-left">
-                <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-                <p class="list-group-item-text">{{ recipe.description }}</p>
-            </div>
-            <span class="pull-right">
-                <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-responsive" style="max-height: 50px;">
-            </span>
-        </a>
-        <app-recipe-item></app-recipe-item>
-    </div>
-</div> -->
-
-<div class="container">
-    <h4>Recipes ({{ recipes.length }})</h4>
-    <button type="button" class="btn" (click)="toggleGridView()"><i class="fa fa-table-cells-large"></i></button>
-    <button type="button" class="btn" (click)="toggleListView()"><i class="fa fa-list"></i></button>
-
-    <ng-container *ngIf="!isGridView">
-        <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" *ngFor="let recipe of recipes" (click)="recipeClicked(recipe)">
-            <div class="container">
-              <div class="row d-flex justify-content-center align-items-center">
-                <div class="col">
-                  <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-                  <p class="list-group-item-text">{{ recipe.description }}</p>
-                </div>
-                <div class="col text-center">
-                  <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-responsive" style="max-height: 100px;">
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-    </ng-container>
-
-    <!-- <ng-container *ngIf="isGridView">
-        <div class="row list-group">
-            <ng-container *ngFor="let recipe of recipes">
-                <div class="col-md-6">
-                    <a href="#" class="list-group-item list-group-item-action" (click)="recipeClicked(recipe)">
-                        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-                        <p class="list-group-item-text">{{ recipe.description }}</p>
-                        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-responsive" style="max-height: 50px;">
-                    </a>
-                </div>
+        <div class="container">
+            <ng-container *ngIf="!isGridView">
+                <app-recipe-item *ngFor="let recipeElement of recipes" 
+                [recipe]="recipeElement"
+                (recipeSelected)="onRecipeSelected(recipeElement)"></app-recipe-item>
             </ng-container>
         </div>
-    </ng-container> -->
+    </div>
 </div>
-
-<app-recipe-item></app-recipe-item>
