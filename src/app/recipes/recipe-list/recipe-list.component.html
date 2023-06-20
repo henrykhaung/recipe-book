@@ -5,14 +5,15 @@
 </div>
 
 <hr>
-<h4>Recipes ({{ recipes.length }})</h4>
-<button type="button" class="btn" (click)="toggleGridView()"><i class="fa fa-table-cells-large"></i></button>
-<button type="button" class="btn" (click)="toggleListView()"><i class="fa fa-list"></i></button>
+<div class="d-flex justify-content-between align-items-center">
+    <h4>Recipes ({{ recipes.length }})</h4>
+    <button type="button" class="btn" (click)="toggleView()"><i class="fa-regular" [class]="isView ? 'fa-eye' : 'fa-eye-slash'"></i></button>
+</div>
 
 <div class="row">
     <div class="col-xs-12">
         <div class="container">
-            <ng-container *ngIf="!isGridView">
+            <ng-container *ngIf="isView">
                 <app-recipe-item *ngFor="let recipeElement of recipes" 
                 [recipe]="recipeElement"
                 (recipeSelected)="onRecipeSelected(recipeElement)"></app-recipe-item>
