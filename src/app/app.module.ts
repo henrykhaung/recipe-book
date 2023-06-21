@@ -3,6 +3,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -29,6 +30,7 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
     NgbModule,
     FormsModule,
     CommonModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

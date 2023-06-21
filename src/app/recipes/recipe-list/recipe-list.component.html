@@ -17,7 +17,7 @@
             <button type="button" class="btn" (click)="addRecipe()" ngbTooltip="Delete Recipe"><i class="fa-solid fa-minus"></i></button>
         </div>
         <div class="col-6 col-md-1">
-            <button type="button" class="btn" (click)="addRecipe()" ngbTooltip="Reorder Recipes"><i class="fa-solid fa-arrows-up-down"></i></button>
+            <button type="button" class="btn" (click)="isReorder = !isReorder" ngbTooltip="Reorder Recipes"><i class="fa-solid" [class]="isReorder ? 'fa-ban' : 'fa-arrows-up-down'"></i></button>
         </div>
     </div>
 </div>
@@ -26,9 +26,15 @@
     <div class="col-xs-12">
         <div class="container">
             <ng-container *ngIf="isView">
-                <app-recipe-item *ngFor="let recipeElement of recipes" 
-                [recipe]="recipeElement"
-                (recipeSelected)="onRecipeSelected(recipeElement)"></app-recipe-item>
+                <div cdkDropListGroup>
+                    <div cdkDropList (cdkDropListDropped)="drop($event)">
+                        <app-recipe-item *ngFor="let recipeElement of recipes" 
+                        [recipe]="recipeElement"
+                        (recipeSelected)="onRecipeSelected(recipeElement)"
+                        cdkDrag
+                        [cdkDragDisabled]="!isReorder"></app-recipe-item>
+                    </div>
+                </div>
             </ng-container>
         </div>
     </div>
