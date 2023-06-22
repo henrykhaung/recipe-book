@@ -30,7 +30,6 @@
                     <div cdkDropList (cdkDropListDropped)="drop($event)">
                         <app-recipe-item *ngFor="let recipeElement of recipes" 
                         [recipe]="recipeElement"
-                        (recipeSelected)="onRecipeSelected(recipeElement)"
                         cdkDrag
                         [cdkDragDisabled]="!isReorder"></app-recipe-item>
                     </div>
