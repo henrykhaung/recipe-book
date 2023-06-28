@@ -24,12 +24,33 @@ export class RecipeService {
             [
                 new Ingredient('Meat', 1),
                 new Ingredient('Lettuce', 1)
-            ]
-        )
+            ]),
+
+        new Recipe(
+            'test',
+            'test description',
+            '',
+            [
+                new Ingredient('test ingredient1', 1)
+            ]),
+
+        new Recipe(
+            'testrecipe',
+            'test 123',
+            '',
+            [
+                new Ingredient('testtesttest', 1)
+            ]),
     ];
 
     getRecipes() {
         return this.recipes.slice();
+    }
+
+    getRecipe(name: string) {
+        return this.recipes.find((recipe) => {
+          return recipe.name === name;
+        });
     }
 
     constructor(private shoppinglistService: ShoppingListService) {}

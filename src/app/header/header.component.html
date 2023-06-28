@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid ms-3">
-        <a class="navbar-brand" href="#">Recipe Book</a>
+        <a class="navbar-brand" routerLink="/recipes">Recipe Book</a>
         <button class="navbar-toggler me-3" type="button" (click)="openOffcanvas(offcanvasContent)">
             <i class="fas fa-bars"></i>
         </button>
@@ -30,11 +30,11 @@
                             Account
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" (click)="onSelect('recipe')">Recipes</a>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a class="nav-link" routerLink="/recipes">Recipes</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" (click)="onSelect('shopping-list')">Shopping List</a>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Save Data</a>
@@ -49,11 +49,11 @@
     
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="#" (click)="onSelect('recipe')">Recipes</a>
+                <li class="nav-item ms-3" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/recipes">Recipes</a>
                 </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="#" (click)="onSelect('shopping-list')">Shopping List</a>
+                <li class="nav-item ms-3" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
                 </li>
             </ul>
 

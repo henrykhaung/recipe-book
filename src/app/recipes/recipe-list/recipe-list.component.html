@@ -28,8 +28,9 @@
             <ng-container *ngIf="isView">
                 <div cdkDropListGroup>
                     <div cdkDropList (cdkDropListDropped)="drop($event)">
-                        <app-recipe-item *ngFor="let recipeElement of recipes" 
+                        <app-recipe-item *ngFor="let recipeElement of recipes; let i = index" 
                         [recipe]="recipeElement"
+                        [recipename]="recipeElement.name"
                         cdkDrag
                         [cdkDragDisabled]="!isReorder"></app-recipe-item>
                     </div>
