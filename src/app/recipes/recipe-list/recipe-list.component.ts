@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { RecipeService } from '../recipe.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-list',
@@ -11,7 +12,10 @@ import { RecipeService } from '../recipe.service';
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
   
-  constructor(private recipeService: RecipeService) { }
+  constructor(
+    private recipeService: RecipeService, 
+    private router: Router, 
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
@@ -31,6 +35,10 @@ export class RecipeListComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.recipes, event.previousIndex, event.currentIndex);
+  }
+
+  onNewRecipe() {
+    this.router.navigate(['add'], {relativeTo: this.route});
   }
 
   

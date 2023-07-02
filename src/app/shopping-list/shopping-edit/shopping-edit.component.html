@@ -10,6 +10,17 @@
                     <label for="amount">Amount</label>
                     <input type="number" id="amount" class="form-control" #amountInput>
                 </div>
+                <div class="col-sm-2 form-group">
+                    <label for="unit">Unit</label>
+                    <select class="form-select" aria-label="Select units" #unitInput>
+                        <option selected>Select units</option>
+                        <option value="lb">lb</option>
+                        <option value="oz">oz</option>
+                        <option value="tbsp">tbsp</option>
+                        <option value="tsp">tsp</option>
+                        <option value="cup">cup</option>
+                    </select>
+                </div>
             </div>
 
             <div class="row mt-3">
