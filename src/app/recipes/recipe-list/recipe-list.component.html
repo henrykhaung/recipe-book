@@ -14,10 +14,10 @@
             <button type="button" class="btn" (click)="onNewRecipe()" ngbTooltip="Add Recipe"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="col-6 col-md-1">
-            <button type="button" class="btn" (click)="addRecipe()" ngbTooltip="Delete Recipe"><i class="fa-solid fa-minus"></i></button>
+            <button type="button" class="btn" (click)="onDeleteRecipe()" ngbTooltip="Delete Recipe"><i class="fa-solid fa-minus"></i></button>
         </div>
         <div class="col-6 col-md-1">
-            <button type="button" class="btn" (click)="isReorder = !isReorder" ngbTooltip="Reorder Recipes"><i class="fa-solid" [class]="isReorder ? 'fa-ban' : 'fa-arrows-up-down'"></i></button>
+            <button type="button" class="btn" (click)="isReorder = !isReorder" ngbTooltip="Reorder Recipes"><i class="fa-solid" [class]="isReorder ? 'fa-ban' : 'fa-sort'"></i></button>
         </div>
     </div>
 </div>

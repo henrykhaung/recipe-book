@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
@@ -6,6 +7,8 @@ import { Recipe } from "./recipe.model";
 
 @Injectable()
 export class RecipeService {
+    recipesChanged = new Subject<Recipe[]>();
+
     private recipes: Recipe[] = [
         new Recipe(
             'Test recipe', 
@@ -52,10 +55,39 @@ export class RecipeService {
         });
     }
 
-    constructor(private shoppinglistService: ShoppingListService) {}
+    addRecipe(recipe: Recipe) {
+        if(this.recipes.find(existingRecipe => existingRecipe.name === recipe.name)) {
+            this.openErrorModal("You cannot add a recipe with the same name.");
+        } else {
+            this.recipes.push(recipe);
+            this.recipesChanged.next(this.recipes.slice());
+        }
+    }
+
+    updateRecipe(name: string, recipe: Recipe) {
+        for (let index = 0; index < this.recipes.length; index++) {
+            if (this.recipes[index].name === name) {
+                this.recipes[index] = recipe;
+                this.recipesChanged.next(this.recipes.slice());
+                break;
+            }
+        }
+    }
+
+    /* For list reorder */
+    updateRecipes(recipes: Recipe[]) {
+        this.recipes = recipes;
+        this.recipesChanged.next(this.recipes.slice());
+    }
+
+    constructor(private shoppinglistService: ShoppingListService, private modalService: NgbModal) {}
 
     addToShoppingList(ingredients: Ingredient[]) {
         this.shoppinglistService.addIngredients(ingredients);
 
+    }
+
+    openErrorModal(content: string) {
+        this.modalService.open(content, {centered: true});
     }
 }

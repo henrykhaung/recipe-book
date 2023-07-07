@@ -11,7 +11,7 @@ const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
     { path: 'recipes', component: RecipesComponent, children: [
         { path: '', component: RecipesStartComponent },
-        { path: 'add', component: RecipeAddComponent},
+        { path: 'add', component: RecipeEditComponent},
         { path: ':name', component: RecipeDetailComponent },
         { path: ':name/edit', component: RecipeEditComponent}
     ]},
