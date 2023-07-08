@@ -1,12 +1,13 @@
 <div class="row ms-3">
     <div class="col-xs-12">
-        <h4>Currently Editing: {{recipeName}} </h4> 
+        <h4>Currently {{ editMode ? 'Editing' : 'Adding New Recipe' }}: {{ recipeName }}</h4>
         <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
             <div class="row mt-3">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input
+                        [(ngModel)]="recipeName"
                         type="text"
                         id="name"
                         formControlName="name"
@@ -23,15 +24,19 @@
                         type="text"
                         id="imagePath"
                         formControlName="imagePath"
-                        class="form-control">
+                        class="form-control"
+                        #imagePath>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-2">
+            <div class="row mt-3">
                 <div class="col-xs-12">
-                    <label for="image-preview">Image Preview</label>
-                    <img src="" class="img-responsive">
+                    <img
+                    [src]="imagePath.value"
+                    alt="Image Preview"
+                    class="img-responsive"
+                    #imagePath>
                 </div>
             </div>
 
@@ -112,7 +117,7 @@
                     <div>
                         <button type="button" class="btn btn-success me-2" (click)="onAddIngredient()">Add Ingredient</button>
                         <button type="submit" class="btn btn-primary me-2" [disabled]="!recipeForm.valid">Save Changes</button>
-                        <button type="submit" class="btn btn-danger">Cancel Changes</button>
+                        <button type="submit" class="btn btn-danger" (click)="onCancel()">Cancel Changes</button>
                     </div>
                 </div>
             </div>

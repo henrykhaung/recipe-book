@@ -3,6 +3,8 @@ import { Recipe } from '../recipe.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-list',
@@ -11,11 +13,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
+  selectedRecipes = {};
+  form: FormGroup;
   
   constructor(
     private recipeService: RecipeService, 
     private router: Router, 
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
     this.recipeService.recipesChanged.subscribe(
@@ -24,6 +30,11 @@ export class RecipeListComponent implements OnInit {
       }
     )
     this.recipes = this.recipeService.getRecipes();
+
+    this.form = this.fb.group({
+      recipes: this.fb.array([])
+    });
+    this.recipes.forEach(() => this.recipesArray.push(this.fb.control(false)));
   }
 
   isView: boolean = true;
@@ -31,8 +42,26 @@ export class RecipeListComponent implements OnInit {
     this.isView = !this.isView;
   }
 
-  onDeleteRecipe() {
-    // TODO
+  get recipesArray() {
+    return this.form.controls.recipes as FormArray;
+  }
+
+  onDeleteOpen(content: string) {
+    this.modalService.open(content, {centered: true});
+  }
+
+  toggleSelection(index) {
+    this.selectedRecipes[index] = !this.selectedRecipes[index];
+  }
+  
+  onDeleteOpenSubmit() {
+    const selectedRecipeIndexes = this.form.value.recipes
+    .map((checked, i) => checked ? i : null)
+    .filter(v => v !== null);
+
+    this.recipes = this.recipes.filter((recipe, i) => !selectedRecipeIndexes.includes(i));
+    this.form.reset();
+    this.modalService.dismissAll();
   }
 
   isReorder: boolean = false;

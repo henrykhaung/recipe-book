@@ -64,6 +64,19 @@ export class RecipeService {
         }
     }
 
+    deleteRecipe(name: string) {
+        let i = -1;
+        for (let index = 0; index < this.recipes.length; index++) {
+            if (this.recipes[index].name === name) {
+                i = index;
+            }
+        }
+        if (i !== -1) {
+            this.recipes.splice(i, 1);
+            this.recipesChanged.next(this.recipes.slice());
+        }
+    }
+
     updateRecipe(name: string, recipe: Recipe) {
         for (let index = 0; index < this.recipes.length; index++) {
             if (this.recipes[index].name === name) {

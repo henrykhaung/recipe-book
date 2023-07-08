@@ -10,10 +10,12 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
+  name: string;
 
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
+        this.name = params['name'];
         this.recipe = this.recipeService.getRecipe(params['name']);
       }
     );
@@ -33,6 +35,11 @@ export class RecipeDetailComponent implements OnInit {
 
   onEditRecipe() {
     this.router.navigate(['edit'], {relativeTo: this.route});
+  }
+
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.name);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
   
 }
