@@ -14,7 +14,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
   selectedRecipes = {};
-  form: FormGroup;
+  deleteForm: FormGroup;
   
   constructor(
     private recipeService: RecipeService, 
@@ -31,7 +31,7 @@ export class RecipeListComponent implements OnInit {
     )
     this.recipes = this.recipeService.getRecipes();
 
-    this.form = this.fb.group({
+    this.deleteForm = this.fb.group({
       recipes: this.fb.array([])
     });
     this.recipes.forEach(() => this.recipesArray.push(this.fb.control(false)));
@@ -43,7 +43,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   get recipesArray() {
-    return this.form.controls.recipes as FormArray;
+    return this.deleteForm.controls.recipes as FormArray;
   }
 
   onDeleteOpen(content: string) {
@@ -55,12 +55,14 @@ export class RecipeListComponent implements OnInit {
   }
   
   onDeleteOpenSubmit() {
-    const selectedRecipeIndexes = this.form.value.recipes
-    .map((checked, i) => checked ? i : null)
-    .filter(v => v !== null);
+    const selectedRecipeIndexes = this.deleteForm.value.recipes.map(
+      (checked, i) => checked ? i : null
+      ).filter(
+        v => v !== null
+        );
 
     this.recipes = this.recipes.filter((recipe, i) => !selectedRecipeIndexes.includes(i));
-    this.form.reset();
+    this.deleteForm.reset();
     this.modalService.dismissAll();
   }
 

@@ -45,6 +45,8 @@ export class RecipeService {
             ]),
     ];
 
+    constructor(private shoppinglistService: ShoppingListService, private modalService: NgbModal) {}
+
     getRecipes() {
         return this.recipes.slice();
     }
@@ -65,42 +67,32 @@ export class RecipeService {
     }
 
     deleteRecipe(name: string) {
-        let i = -1;
-        for (let index = 0; index < this.recipes.length; index++) {
-            if (this.recipes[index].name === name) {
-                i = index;
-            }
-        }
-        if (i !== -1) {
-            this.recipes.splice(i, 1);
+        const index = this.recipes.findIndex(recipe => recipe.name === name);
+        if (index !== -1) {
+            this.recipes.splice(index, 1);
             this.recipesChanged.next(this.recipes.slice());
         }
     }
 
     updateRecipe(name: string, recipe: Recipe) {
-        for (let index = 0; index < this.recipes.length; index++) {
-            if (this.recipes[index].name === name) {
-                this.recipes[index] = recipe;
-                this.recipesChanged.next(this.recipes.slice());
-                break;
-            }
+        const index = this.recipes.findIndex(existingRecipe => existingRecipe.name === name);
+        if (index !== -1) {
+            this.recipes[index] = recipe;
+            this.recipesChanged.next(this.recipes.slice());
         }
     }
 
     /* For list reorder */
     updateRecipes(recipes: Recipe[]) {
-        this.recipes = recipes;
+        this.recipes = recipes.slice();
         this.recipesChanged.next(this.recipes.slice());
     }
 
-    constructor(private shoppinglistService: ShoppingListService, private modalService: NgbModal) {}
-
     addToShoppingList(ingredients: Ingredient[]) {
         this.shoppinglistService.addIngredients(ingredients);
-
     }
 
     openErrorModal(content: string) {
-        this.modalService.open(content, {centered: true});
+        this.modalService.open(content);
     }
 }

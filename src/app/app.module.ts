@@ -17,7 +17,7 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { RecipeAddComponent } from './recipes/recipe-add/recipe-add.component';
+import { RecipeService } from './recipes/recipe.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { RecipeAddComponent } from './recipes/recipe-add/recipe-add.component';
     RecipeDetailComponent,
     RecipesStartComponent,
     RecipeEditComponent,
-    RecipeAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +41,7 @@ import { RecipeAddComponent } from './recipes/recipe-add/recipe-add.component';
     DragDropModule,
     AppRoutingModule,
   ],
-  providers: [ShoppingListService],
+  providers: [ShoppingListService, RecipeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

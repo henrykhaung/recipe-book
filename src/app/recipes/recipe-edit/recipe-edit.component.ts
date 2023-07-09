@@ -80,10 +80,6 @@ export class RecipeEditComponent implements OnInit {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
-  onDeleteIngredient() {
-
-  }
-
   onAddIngredient() {
     let name = 'Enter an ingredient';
 
@@ -99,12 +95,17 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
+  onDeleteIngredient() {
+
+  }
+
   onSubmit() {
     const newRecipe = new Recipe(
       this.recipeForm.value['name'],
       this.recipeForm.value['description'],
       this.recipeForm.value['imagePath'],
-      this.recipeForm.value['ingredients']);
+      this.recipeForm.value['ingredients']
+    );
     if (this.editMode) {
       this.recipeService.updateRecipe(newRecipe.name, newRecipe);
 
