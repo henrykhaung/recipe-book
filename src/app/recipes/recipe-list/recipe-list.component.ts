@@ -30,8 +30,9 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       (recipes: Recipe[]) => {
         this.recipes = recipes;
       }
-    )
+    );
     this.recipes = this.recipeService.getRecipes();
+
 
     this.deleteForm = this.fb.group({
       recipes: this.fb.array([])

@@ -18,7 +18,6 @@ export class RecipeEditComponent implements OnInit {
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private router: Router) {
-
   }
 
   ngOnInit() {
@@ -26,9 +25,10 @@ export class RecipeEditComponent implements OnInit {
       (params: Params) => {
         this.recipeName = params['name'];
         this.editMode = params['name'] != null;
-        this.initForm();
+        // this.initForm();
       }
     );
+    this.initForm();
   }
 
   private initForm() {
@@ -94,8 +94,8 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
-  onDeleteIngredient() {
-
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
 
   onSubmit() {

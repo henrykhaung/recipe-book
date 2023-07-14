@@ -45,7 +45,10 @@ export class RecipeService {
             ]),
     ];
 
-    constructor(private shoppinglistService: ShoppingListService, private modalService: NgbModal) {}
+    constructor(
+        private shoppinglistService: ShoppingListService,
+        private modalService: NgbModal
+    ) {}
 
     getRecipes() {
         return this.recipes.slice();
