@@ -10,7 +10,6 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-edit.component.css']
 })
 export class RecipeEditComponent implements OnInit {
-  recipe: Recipe;
   recipeName: string;
   editMode = false;
   recipeForm: FormGroup;
@@ -43,7 +42,7 @@ export class RecipeEditComponent implements OnInit {
       name = recipe.name;
       imagePath = recipe.imagePath;
       description = recipe.description;
-      if (recipe.ingredients) {
+      if (recipe['ingredients']) {
         for (let ingredient of recipe.ingredients) {
           ingredients.push(new FormGroup({
             'name': new FormControl(ingredient.name, Validators.required),

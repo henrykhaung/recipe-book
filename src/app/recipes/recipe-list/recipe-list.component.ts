@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[] = [];
+  subscription: Subscription;
   selectedRecipes = {};
   deleteForm: FormGroup;
   
@@ -24,7 +26,7 @@ export class RecipeListComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.recipeService.recipesChanged.subscribe(
+    this.subscription = this.recipeService.recipesChanged.subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
       }
@@ -35,6 +37,10 @@ export class RecipeListComponent implements OnInit {
       recipes: this.fb.array([])
     });
     this.recipes.forEach(() => this.recipesArray.push(this.fb.control(false)));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   isView: boolean = true;

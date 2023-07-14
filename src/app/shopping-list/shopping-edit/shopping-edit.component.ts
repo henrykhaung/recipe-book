@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
@@ -10,10 +10,11 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit {
-  @ViewChild('nameInput', {static: false}) nameInputRef: ElementRef;
-  @ViewChild('amountInput', {static: false}) amountInputRef: ElementRef;
-  @ViewChild('unitInput', {static: false}) unitInputRef: ElementRef;
+export class ShoppingEditComponent implements OnInit, OnDestroy {
+  editSubscription: Subscription;
+  editMode = false;
+  editedIngredientIndex: number;
+  editedIngredient: Ingredient;
 
   ingredients: Ingredient[] = [];
   selectedIngredients = {};
@@ -22,32 +23,46 @@ export class ShoppingEditComponent implements OnInit {
 
   constructor(
     private shoppinglistService: ShoppingListService,
-    private router: Router,
-    private route: ActivatedRoute,
     private modalService: NgbModal,
-    ) {}
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
-    this.shoppinglistService.ingredientsChanged.subscribe(
-      (ingredients: Ingredient[]) => {
-        this.ingredients = ingredients;
+    this.editSubscription = this.shoppinglistService.edit.subscribe(
+      (index: number) => {
+        this.editedIngredientIndex = index;
+        this.editMode = true;
+        this.editedIngredient = this.shoppinglistService.getIngredient(index);
+        this.initForm();
       }
-    )
-    this.ingredients = this.shoppinglistService.getIngredients();
-    this.initForm();
+    );
+
+    if (!this.editMode) {
+      this.initForm();
+    }
+    // this.ingredients = this.shoppinglistService.getIngredients();
+  }
+
+  ngOnDestroy() {
+    
   }
 
   private initForm() {
-    let name = '';
-    let amount = '';
-    let unit = '';
+    let name = null;
+    let amount = null;
+    let unit = null;
+
+    if (this.editMode) {
+      name = this.editedIngredient.name;
+      amount = this.editedIngredient.amount;
+      unit = this.editedIngredient.unit;
+    }
 
     this.ingredientForm = new FormGroup({
       'name': new FormControl(name, Validators.required),
       'amount': new FormControl(amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       'unit': new FormControl(unit, Validators.required)
     });
-
   }
 
   /*
@@ -55,7 +70,22 @@ export class ShoppingEditComponent implements OnInit {
     see recipe-list.component.ts 
   */
   onDeleteOpen(content: string) {
-    this.modalService.open(content, {centered:true});
+    this.deleteForm = this.formBuilder.group({
+      ingredients: new FormArray(this.ingredients.map(() => new FormControl(false)))
+    });
+    console.log(this.ingredients);
+    this.modalService.open(content, {centered: true});
+  }
+
+  onDeleteSubmit() {
+    const selectedIngredients = this.deleteForm.value.ingredients;
+    this.ingredients = this.ingredients.filter((ingredient, index) => !selectedIngredients[index]);
+    this.shoppinglistService.updateIngredients(this.ingredients);
+    this.modalService.dismissAll();
+  }
+
+  onClearShoppingList() {
+    this.shoppinglistService.clearShoppingList();
   }
 
   onSubmit() {
@@ -65,22 +95,26 @@ export class ShoppingEditComponent implements OnInit {
       this.ingredientForm.value['unit']
     );
 
-    const existingIngredient = this.ingredients.find(ingredient => ingredient.name === newIngredient.name);
-    if (existingIngredient) {
-      if (existingIngredient.unit === newIngredient.unit) {
-        existingIngredient.amount += newIngredient.amount;
-      } else {
-        this.shoppinglistService.addIngredient(newIngredient);
-      }
+    if (this.editMode) {
+      this.shoppinglistService.updateIngredient(this.editedIngredientIndex, newIngredient);
     } else {
       this.shoppinglistService.addIngredient(newIngredient);
     }
 
-    this.router.navigate(['/shopping-list'], {relativeTo: this.route});
+    this.editMode = false;
+    this.ingredientForm.reset();
+  }
+
+  onDelete() {
+    this.shoppinglistService.deleteIngredient(this.editedIngredientIndex);
+    this.onClear();
   }
 
   onClear() {
-    this.shoppinglistService.clearShoppingList();
+    this.ingredientForm.reset();
+    this.editMode = false;
   }
+
+
 
 }
