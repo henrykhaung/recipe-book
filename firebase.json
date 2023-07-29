@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "recipe-book",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

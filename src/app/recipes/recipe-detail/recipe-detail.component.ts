@@ -26,7 +26,6 @@ export class RecipeDetailComponent implements OnInit {
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router) {
-
     }
 
   onAddIngredientsToShoppingList() {

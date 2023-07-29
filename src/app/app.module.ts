@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';  
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,30 +20,52 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from './recipes/recipe.service';
+import { DataService } from './shared/data.service';
+import { LandingHeaderComponent } from './landing/landing-header/landing-header.component';
+import { RecipeDayComponent } from './recipes/recipe-day/recipe-day.component';
+import { HomeComponent } from './home/home.component';
+import { RecipeHomeComponent } from './recipe-home/recipe-home.component';
+import { AuthComponent } from './auth/auth.component';
+
+import { environment } from 'environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AuthService } from './auth/auth.service';
+import { LoadingSpinnerComponent } from 'src/assets/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LandingHeaderComponent,
     HeaderComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
     RecipesComponent,
+    RecipeDayComponent,
     RecipeListComponent,
     RecipeItemComponent,
     RecipeDetailComponent,
     RecipesStartComponent,
     RecipeEditComponent,
+    HomeComponent,
+    RecipeHomeComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     CommonModule,
     DragDropModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
-  providers: [ShoppingListService, RecipeService],
+  providers: [ShoppingListService, RecipeService, DataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,48 @@
+.rounded {
+    border-radius: 4% !important;
+}
+
+.navbrand {
+    position: relative;
+    top: 0;
+    transition: top ease 0.3s;
+    display: inline-block;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+.navbrand:hover {
+    top: -10px;
+}
+
+.signup-btn {
+    font-size: large;
+    width: 150px;
+    height: 50px;
+    transition: transform 0.1s;
+}
+
+.signup-btn:hover {
+    background-color: #1FAF0D;
+    border-color: #1FAF0D;
+    font-size: larger;
+    transform: scale(1.1);
+}
+
+.switch {
+    text-decoration: underline;
+    color: #0000EE;
+}
+
+.switch:hover {
+    cursor: pointer;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.invalid-password {
+    font-size: smaller;
+    color: red;
+}

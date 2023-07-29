@@ -36,7 +36,7 @@ export class ShoppingListService {
     addIngredients(ingredientsToAdd: Ingredient[]) {
         let i = 0;
         while (i < ingredientsToAdd.length) {
-            let ingredientToAdd = ingredientsToAdd[i];
+            let ingredientToAdd = { ...ingredientsToAdd[i] };
             if (!ingredientToAdd) continue;
             let update = false;
             for (let index = 0; index < this.ingredients.length; index++) {
@@ -75,6 +75,14 @@ export class ShoppingListService {
     updateIngredients(ingredients: Ingredient[]) {
         this.ingredients = ingredients;
         this.ingredientsChanged.next(this.ingredients.slice());
+    }
+
+    toJson(ingredient: Ingredient) {
+        return {
+            'name': ingredient.name,
+            'amount': ingredient.amount,
+            'unit': ingredient.unit
+        };
     }
 
 }

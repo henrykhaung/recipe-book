@@ -1,0 +1,12 @@
+.font {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: larger;
+}
+
+::placeholder {
+    font-family: "Gill Sans", sans-serif;
+}
+
+.btn {
+    border-color: transparent !important;
+}

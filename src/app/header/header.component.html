@@ -1,13 +1,15 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid ms-3">
-        <a class="navbar-brand" routerLink="/recipes">Recipe Book</a>
+<nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-sm">
+        <a class="navbar-brand" routerLink="/home">
+            <img class="logo-img" src="/assets/navbrand.png" alt="recipebook logo">
+        </a>
         <button class="navbar-toggler me-3" type="button" (click)="openOffcanvas(offcanvasContent)">
             <i class="fas fa-bars"></i>
         </button>
         
         <ng-template #offcanvasContent let-offcanvas>
             <div class="offcanvas-header ms-3 mt-2">
-                <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Recipe Book</h2>
+                <img class="logo-img" src="/assets/navbrand.png" alt="recipebook logo">
                 <button type="button" class="btn ms-3" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"><i class="fa-solid fa-xmark fa-2xl"></i></button>
             </div>
 
@@ -21,58 +23,58 @@
                 
                 <ul class="nav flex-column nav-underline ms-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="font nav-link" href="#">
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="font nav-link" href="#">
                             Account
                         </a>
                     </li>
                     <li class="nav-item" routerLinkActive="active">
-                        <a class="nav-link" routerLink="/recipes">Recipes</a>
+                        <a class="font nav-link" routerLink="/recipes"> Recipes</a>
                     </li>
                     <li class="nav-item" routerLinkActive="active">
-                        <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
+                        <a class="font nav-link" routerLink="/shopping-list">Shopping List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Save Data</a>
+                        <a class="font nav-link" href="#">Save Data</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Fetch Data</a>
+                        <a class="font nav-link" href="#">Fetch Data</a>
                     </li>
                 </ul>
             </div>
 
         </ng-template>
-    
+        
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item ms-3" routerLinkActive="active">
-                    <a class="nav-link" routerLink="/recipes">Recipes</a>
+                    <a class="font nav-link" routerLink="/recipes">Recipes</a>
                 </li>
                 <li class="nav-item ms-3" routerLinkActive="active">
-                    <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
+                    <a class="font nav-link" routerLink="/shopping-list">Shopping List</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item me-3">
-                    <button type="button" class="btn"><i class="fa-solid fa-user"></i></button>
+                    <button type="button" class="btn"><i class="fa-solid fa-user fa-large"></i></button>
                 </li>
 
                 <li class="nav-item me-3">
                     <form *ngIf="searchVisible" class="d-flex" role="search" (blur)="toggleSearch()">
                         <input class="form-control me-2" type="search" placeholder="Search for recipes" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass fa-large"></i></button>
                     </form>
-                    <button *ngIf="!searchVisible" type="button" class="btn" (click)="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button *ngIf="!searchVisible" type="button" class="btn" (click)="toggleSearch()"><i class="fa-solid fa-magnifying-glass fa-large"></i></button>
                 </li>
 
                 <li class="nav-item me-3">
                     <button type="button" class="btn" (click)="openOffcanvas(offcanvasContent)">
-                        <i class="fas fa-bars"></i>
+                        <i class="fas fa-bars fa-xl"></i>
                     </button>
                 </li>
             </ul>

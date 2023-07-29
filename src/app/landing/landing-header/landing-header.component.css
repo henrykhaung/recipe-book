@@ -1,0 +1,19 @@
+.navbar-search, .navbar-login-font {
+    font-family: "Gill Sans", sans-serif;
+    font-size: larger;
+}
+
+::placeholder {
+    font-family: "Gill Sans", sans-serif;
+}
+
+.btn {
+    border-color: transparent !important;
+}
+
+
+.navbar-login-btn {
+    background-color: #114B5F !important;
+    width: 80px !important;
+    border-radius: 20px !important;
+}

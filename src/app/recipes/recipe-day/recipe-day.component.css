@@ -1,0 +1,130 @@
+/* card carousel */
+.cardimg-wrapper {
+    max-width: 100%;
+    height: 65vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 576px) {
+    .carousel-inner {
+        display: flex;
+    }
+    .carousel-item {
+        display: block;
+        margin-right: 0;
+        flex: 0 0 calc(100%/3);
+    }
+
+    .cardimg-wrapper {
+        height: 20vw;
+    }
+}
+
+.carousel-inner {
+    padding: 0.5em;
+}
+
+.card {
+    margin: 0 1em;
+}
+  
+.carousel .carousel-control-prev,
+.carousel .carousel-control-next {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.carousel:hover .carousel-control-prev,
+.carousel:hover .carousel-control-next {
+    opacity: 1;
+}
+/* card carousel END*/
+
+/* headers tags */
+#recipeday_p {
+    font-size: large;
+}
+
+#recipeday_header, #yourrecipes_header {
+    font-weight:600;
+}
+
+#yourRecipes {
+    padding-top: 3.5rem;
+    padding-bottom: 2.8rem;
+}
+
+#yourrecipes_p {
+    font-size: large;
+    /* display: block; */
+}
+/* headers tags END */
+
+/* masonry layout */
+.recipe-card {
+    transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.recipe-card:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transform: translate3D(0, -10px, 0);
+}
+
+.recipe-card {
+    overflow: auto;
+    height: auto;
+}
+
+.masonry-container {
+    column-count: 3;
+    column-gap: 7em;
+}
+
+/* @media (max-width: 1200px) {
+    .masonry-container {
+        column-count: 3;
+    }
+} */
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .masonry-container {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .masonry-container {
+        column-count: 1;
+    }
+}
+
+.card-item {
+    /* background-color: #eee; */
+    margin-bottom: 2em;
+    break-inside: avoid;
+}
+/* masonry layout END */
+
+
+/* alignment with carosel and masonry */
+/* .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.carousel-inner {
+    padding: 0.5em;  
+}
+
+.card {
+    margin: 0 1em;  
+} */
+
+  
