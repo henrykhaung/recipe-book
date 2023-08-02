@@ -1,61 +1,82 @@
 <div class="container mt-3">
-    <h1 id="recipeday_header" class="mt-5 text-center">Recipes of the Day</h1>
-    <p id="recipeday_p" class="text-center">Wondering what to make today? Maybe try some of these recipes below!</p>
+  <h1 id="recipeday_header" class="mt-5 text-center">Recipes of the Day</h1>
+  <p id="recipeday_p" class="text-center">
+    Wondering what to make today? Maybe try some of these recipes below!
+  </p>
+
+  <div class="text-center mt-5">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+  </div>
 </div>
 
 <!-- copied from Bootstrap docs -->
-<div id="carousel" class="carousel slide pt-4 pt-sm-6">
-    <div class="carousel-inner" [@fadeAnimation]="activeSlideIndex" (mouseover)="stopAutoplay()" (mouseout)="startAutoplay()">
-        <div 
-        class="carousel-item"
-        *ngFor="let recipe of getActiveRecipes(); let i = index"
-        [class.active]="i === 0">        
-            <div class="card">
-                <div class="cardimg-wrapper">
-                    <img [src]="recipe.imagePath" alt="...">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ recipe.name }}</h5>
-                    <p class="card-text">{{ recipe.description }}</p>
-                    <a [routerLink]="['/recipes', recipe.name]" class="btn btn-primary">View Recipe</a>
-                </div>
-            </div>
+<div id="carousel" class="carousel slide pt-4 pt-sm-6" *ngIf="!isLoading">
+  <div
+    class="carousel-inner"
+    [@fadeAnimation]="activeSlideIndex"
+    (mouseover)="stopAutoplay()"
+    (mouseout)="startAutoplay()"
+  >
+    <div
+      class="carousel-item"
+      *ngFor="let recipe of getActiveRecipes(); let i = index"
+      [class.active]="i === 0"
+    >
+      <div class="card">
+        <div class="cardimg-wrapper">
+          <img [src]="recipe.imagePath" alt="..." />
         </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ recipe.name }}</h5>
+          <p class="card-text">{{ recipe.description }}</p>
+          <a [routerLink]="['/recipes', recipe.name]" class="btn btn-primary"
+            >View Recipe</a
+          >
+        </div>
+      </div>
     </div>
+  </div>
 
-    <button (click)="prev()" class="carousel-control-prev" type="button">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button (click)="next()" class="carousel-control-next" type="button">
-        <span class="carousel-control-next-icon"></span>
-    </button>
+  <button (click)="prev()" class="carousel-control-prev" type="button">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button (click)="next()" class="carousel-control-next" type="button">
+    <span class="carousel-control-next-icon"></span>
+  </button>
 </div>
 
-<div class="container mt-5 mb-5">
-    <h2 id="yourrecipes_header" class="mt-5 text-center">Your Recipes</h2>
+<div class="container mt-5 mb-5" *ngIf="!isLoading">
+  <h2 id="yourrecipes_header" class="mt-5 text-center">Your Recipes</h2>
 </div>
 
-<div class="container masonry-container">
-    <div *ngFor="let recipe of recipes">
-        <a [routerLink]="['/recipes', recipe.name]">
-            <div class="card recipe-card card-item" style="width: 20rem;">
-                <img [src]="recipe.imagePath" class="card-img-top" alt="{{recipe.name}}">
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{recipe.name}}</h5>
-                    <small>{{recipe.description}}</small>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <a [routerLink]="['/recipes', 'add']">
-        <div class="card recipe-card card-item" style="width: 20rem;">
-            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title text-center">Add a recipe</h5>
-                <small>Create a new recipe</small>
-            </div>
+<div class="container masonry-container" *ngIf="!isLoading">
+  <div *ngFor="let recipe of recipes">
+    <a [routerLink]="['/recipes', recipe.name]">
+      <div class="card recipe-card card-item" style="width: 20rem">
+        <img
+          [src]="recipe.imagePath"
+          class="card-img-top"
+          alt="{{ recipe.name }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ recipe.name }}</h5>
+          <small>{{ recipe.description }}</small>
         </div>
+      </div>
     </a>
-    
+  </div>
+
+  <a [routerLink]="['/recipes', 'add']">
+    <div class="card recipe-card card-item" style="width: 20rem">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <h5 class="card-title text-center">Add a recipe</h5>
+        <small>Create a new recipe</small>
+      </div>
+    </div>
+  </a>
 </div>

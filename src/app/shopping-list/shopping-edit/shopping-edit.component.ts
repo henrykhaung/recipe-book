@@ -1,6 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
@@ -8,7 +14,7 @@ import { ShoppingListService } from '../shopping-list.service';
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
-  styleUrls: ['./shopping-edit.component.css']
+  styleUrls: ['./shopping-edit.component.css'],
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   editSubscription: Subscription;
@@ -43,9 +49,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     // this.ingredients = this.shoppinglistService.getIngredients();
   }
 
-  ngOnDestroy() {
-    
-  }
+  ngOnDestroy() {}
 
   private initForm() {
     let name = null;
@@ -59,9 +63,12 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     }
 
     this.ingredientForm = new FormGroup({
-      'name': new FormControl(name, Validators.required),
-      'amount': new FormControl(amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
-      'unit': new FormControl(unit, Validators.required)
+      name: new FormControl(name, Validators.required),
+      amount: new FormControl(amount, [
+        Validators.required,
+        Validators.pattern(/^[1-9]+[0-9]*$/),
+      ]),
+      unit: new FormControl(unit, Validators.required),
     });
   }
 
@@ -71,15 +78,18 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   */
   onDeleteOpen(content: string) {
     this.deleteForm = this.formBuilder.group({
-      ingredients: new FormArray(this.ingredients.map(() => new FormControl(false)))
+      ingredients: new FormArray(
+        this.ingredients.map(() => new FormControl(false))
+      ),
     });
-    console.log(this.ingredients);
-    this.modalService.open(content, {centered: true});
+    this.modalService.open(content, { centered: true });
   }
 
   onDeleteSubmit() {
     const selectedIngredients = this.deleteForm.value.ingredients;
-    this.ingredients = this.ingredients.filter((ingredient, index) => !selectedIngredients[index]);
+    this.ingredients = this.ingredients.filter(
+      (ingredient, index) => !selectedIngredients[index]
+    );
     this.shoppinglistService.updateIngredients(this.ingredients);
     this.modalService.dismissAll();
   }
@@ -96,7 +106,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     );
 
     if (this.editMode) {
-      this.shoppinglistService.updateIngredient(this.editedIngredientIndex, newIngredient);
+      this.shoppinglistService.updateIngredient(
+        this.editedIngredientIndex,
+        newIngredient
+      );
     } else {
       this.shoppinglistService.addIngredient(newIngredient);
     }
@@ -114,7 +127,4 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.ingredientForm.reset();
     this.editMode = false;
   }
-
-
-
 }

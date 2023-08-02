@@ -6,24 +6,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.css']
+  styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[] = [];
   subscription: Subscription;
   selectedRecipes = {};
   deleteForm: FormGroup;
-  
+
   constructor(
-    private recipeService: RecipeService, 
-    private router: Router, 
+    private recipeService: RecipeService,
+    private data: DataService,
+    private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.subscription = this.recipeService.recipesChanged.subscribe(
@@ -32,10 +35,14 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       }
     );
     this.recipes = this.recipeService.getRecipes();
-
+    if (this.recipes.length == 0) {
+      this.data.fetchRecipes().subscribe((recipes) => {
+        this.recipes = this.recipeService.getRecipes();
+      });
+    }
 
     this.deleteForm = this.fb.group({
-      recipes: this.fb.array([])
+      recipes: this.fb.array([]),
     });
     this.recipes.forEach(() => this.recipesArray.push(this.fb.control(false)));
   }
@@ -54,21 +61,21 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteOpen(content: string) {
-    this.modalService.open(content, {centered: true});
+    this.modalService.open(content, { centered: true });
   }
 
   toggleSelection(index) {
     this.selectedRecipes[index] = !this.selectedRecipes[index];
   }
-  
-  onDeleteOpenSubmit() {
-    const selectedRecipeIndexes = this.deleteForm.value.recipes.map(
-      (checked, i) => checked ? i : null
-      ).filter(
-        v => v !== null
-        );
 
-    this.recipes = this.recipes.filter((recipe, i) => !selectedRecipeIndexes.includes(i));
+  onDeleteOpenSubmit() {
+    const selectedRecipeIndexes = this.deleteForm.value.recipes
+      .map((checked, i) => (checked ? i : null))
+      .filter((v) => v !== null);
+
+    this.recipes = this.recipes.filter(
+      (recipe, i) => !selectedRecipeIndexes.includes(i)
+    );
     this.deleteForm.reset();
     this.modalService.dismissAll();
   }
@@ -81,7 +88,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   onNewRecipe() {
-    this.router.navigate(['add'], {relativeTo: this.route});
+    this.router.navigate(['add'], { relativeTo: this.route });
   }
-
 }

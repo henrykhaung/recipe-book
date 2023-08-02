@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';  
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,15 +23,15 @@ import { RecipeService } from './recipes/recipe.service';
 import { DataService } from './shared/data.service';
 import { LandingHeaderComponent } from './landing/landing-header/landing-header.component';
 import { RecipeDayComponent } from './recipes/recipe-day/recipe-day.component';
-import { HomeComponent } from './home/home.component';
-import { RecipeHomeComponent } from './recipe-home/recipe-home.component';
 import { AuthComponent } from './auth/auth.component';
 
 import { environment } from 'environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth/auth.service';
-import { LoadingSpinnerComponent } from 'src/assets/loading-spinner/loading-spinner.component';
+import { AuthGuard } from './auth/auth.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -47,10 +47,9 @@ import { LoadingSpinnerComponent } from 'src/assets/loading-spinner/loading-spin
     RecipeDetailComponent,
     RecipesStartComponent,
     RecipeEditComponent,
-    HomeComponent,
-    RecipeHomeComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,9 +62,15 @@ import { LoadingSpinnerComponent } from 'src/assets/loading-spinner/loading-spin
     BrowserAnimationsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
   ],
-  providers: [ShoppingListService, RecipeService, DataService, AuthService],
-  bootstrap: [AppComponent]
+  providers: [
+    ShoppingListService,
+    RecipeService,
+    DataService,
+    AuthService,
+    AuthGuard,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
