@@ -1,13 +1,4 @@
 {
-  "targets": {
-    "recipe-book-8c0fb": {
-      "hosting": {
-        "recipe-book": [
-          "recipe-book-8c0fb"
-        ]
-      }
-    }
-  },
   "projects": {
     "default": "recipe-book-8c0fb"
   }

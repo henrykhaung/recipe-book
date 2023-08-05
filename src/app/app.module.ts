@@ -25,9 +25,6 @@ import { LandingHeaderComponent } from './landing/landing-header/landing-header.
 import { RecipeDayComponent } from './recipes/recipe-day/recipe-day.component';
 import { AuthComponent } from './auth/auth.component';
 
-import { environment } from 'environment';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -61,8 +58,6 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     DragDropModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
   ],
   providers: [
     ShoppingListService,

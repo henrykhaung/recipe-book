@@ -1,5 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# sensitive files
+environment
+environments
+environments/
+
 # Compiled output
 /dist
 /tmp
