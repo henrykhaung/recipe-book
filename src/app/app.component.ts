@@ -8,13 +8,6 @@ import { AuthService } from './auth/auth.service';
 })
 @Injectable()
 export class AppComponent implements OnInit {
-  // signup/login page will not show header
-  displayHeader = true;
-
-  setShowHeader(flag: boolean) {
-    this.displayHeader = flag;
-  }
-
   constructor(
     private authService: AuthService // private store: AngularFirestore
   ) {}

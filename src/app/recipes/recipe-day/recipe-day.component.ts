@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   trigger,
   query,
@@ -12,17 +12,25 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { DataService } from 'src/app/shared/data.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import {
+  NgbCarousel,
+  NgbCarouselConfig,
+  NgbSlideEvent,
+  NgbSlideEventSource,
+} from '@ng-bootstrap/ng-bootstrap';
+import { NgxMasonryOptions } from 'ngx-masonry';
+import { auto } from '@popperjs/core';
 
 export const fadeAnimation = trigger('fadeAnimation', [
   transition('* => *', [
-    query(':enter', [style({ opacity: 0, position: 'absolute' })], {
-      optional: true,
-    }),
+    query(':enter', [style({ opacity: 0 })], { optional: true }),
+    query(':enter', [style({ position: 'absolute' })], { optional: true }),
     query(
       ':leave',
       [
         style({ opacity: 1 }),
-        animate('0.3s', style({ opacity: 0, position: 'absolute' })),
+        animate('0.3s', style({ opacity: 0 })),
+        style({ position: 'absolute' }),
       ],
       { optional: true }
     ),
@@ -30,7 +38,8 @@ export const fadeAnimation = trigger('fadeAnimation', [
       ':enter',
       [
         style({ opacity: 0 }),
-        animate('0.3s', style({ opacity: 1, position: 'relative' })),
+        animate('0.3s', style({ opacity: 1 })),
+        style({ position: 'relative' }),
       ],
       { optional: true }
     ),
@@ -44,21 +53,35 @@ export const fadeAnimation = trigger('fadeAnimation', [
   animations: [fadeAnimation],
 })
 export class RecipeDayComponent implements OnInit, OnDestroy {
+  masonryOptions: NgxMasonryOptions = {
+    fitWidth: true,
+    gutter: 30,
+    columnWidth: 320,
+  };
   recipes: Recipe[];
+  todayRecipes: Recipe[];
   recipename: string;
-  activeSlideIndex = 0;
-  autoplayInterval: any;
-  carouselState = true;
+
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnHover = true;
+  pauseOnFocus = true;
 
   userSubscription: Subscription;
+  loggedIn = false;
   isLoading = true;
 
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private data: DataService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private carouselConfig: NgbCarouselConfig
+  ) {
+    carouselConfig.showNavigationArrows = true;
+    carouselConfig.showNavigationIndicators = true;
+    carouselConfig.interval = 5000;
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -67,57 +90,44 @@ export class RecipeDayComponent implements OnInit, OnDestroy {
 
     this.userSubscription = this.authService.user.subscribe((user) => {
       if (user) {
+        this.loggedIn = true;
         this.data.fetchRecipes().subscribe((recipes) => {
           this.recipes = this.recipeService.getRecipes();
-          if (this.recipes.length > 0) {
-            this.isLoading = false;
-            this.startAutoplay();
-          }
-        });
-      } else {
-        this.data.fetchServerRecipes().subscribe((recipes) => {
-          this.recipes = this.recipeService.getRecipes();
-          if (this.recipes.length > 0) {
-            this.isLoading = false;
-          }
         });
       }
+      this.data.fetchServerRecipes().subscribe((recipes) => {
+        this.todayRecipes = this.recipeService.getRecipes();
+      });
+      this.isLoading = false;
     });
   }
 
   ngOnDestroy() {
-    this.stopAutoplay();
     this.userSubscription.unsubscribe();
   }
 
-  startAutoplay() {
-    this.autoplayInterval = setInterval(() => {
-      this.next();
-    }, 5000);
-  }
+  @ViewChild('carousel', { static: true }) carousel: NgbCarousel;
 
-  stopAutoplay() {
-    clearInterval(this.autoplayInterval);
-  }
-
-  getActiveRecipes() {
-    return this.recipes.slice(
-      this.activeSlideIndex * 3,
-      this.activeSlideIndex * 3 + 3
-    );
-  }
-
-  next() {
-    this.activeSlideIndex++;
-    if (this.activeSlideIndex > this.recipes.length / 3 - 1) {
-      this.activeSlideIndex = 0;
+  togglePaused() {
+    if (this.paused) {
+      this.carousel.cycle();
+    } else {
+      this.carousel.pause();
     }
+    this.paused = !this.paused;
   }
 
-  prev() {
-    this.activeSlideIndex--;
-    if (this.activeSlideIndex < 0) {
-      this.activeSlideIndex = this.recipes.length / 3 - 1;
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (
+      this.unpauseOnArrow &&
+      slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT ||
+        slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
+    ) {
+      this.togglePaused();
+    }
+    if (!slideEvent.paused) {
+      this.togglePaused();
     }
   }
 }

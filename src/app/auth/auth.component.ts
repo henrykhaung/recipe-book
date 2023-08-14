@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AppComponent } from '../app.component';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -21,18 +20,13 @@ export class AuthComponent implements OnInit {
   error: string = null;
   authForm: FormGroup;
 
-  constructor(
-    private appcomponent: AppComponent,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSwitch() {
     this.isSignup = !this.isSignup;
   }
 
   ngOnInit() {
-    this.appcomponent.setShowHeader(false);
     this.initForm();
   }
 
@@ -77,7 +71,6 @@ export class AuthComponent implements OnInit {
       (responseData) => {
         console.log(responseData);
         this.isLoading = false;
-        this.appcomponent.setShowHeader(true);
         this.router.navigate(['/home']);
       },
       (errorMessage) => {

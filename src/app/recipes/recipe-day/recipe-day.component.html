@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container mt-3">
   <h1 id="recipeday_header" class="mt-5 text-center">Recipes of the Day</h1>
   <p id="recipeday_p" class="text-center">
@@ -9,74 +10,103 @@
   </div>
 </div>
 
-<!-- copied from Bootstrap docs -->
-<div id="carousel" class="carousel slide pt-4 pt-sm-6" *ngIf="!isLoading">
-  <div
-    class="carousel-inner"
-    [@fadeAnimation]="activeSlideIndex"
-    (mouseover)="stopAutoplay()"
-    (mouseout)="startAutoplay()"
+<!-- copied from Ngbootstrap docs -->
+<div class="container">
+  <ngb-carousel
+    #carousel
+    [interval]="5000"
+    [pauseOnFocus]="pauseOnFocus"
+    pauseOnHover="pauseOnHover"
+    [showNavigationIndicators]="false"
+    class="next-prev-carousel"
   >
+    <ng-template *ngFor="let recipe of todayRecipes" ngbSlide>
+      <a [routerLink]="['/todays-recipes', recipe.name]">
+        <div class="card h-100 w-75 mx-auto d-block bg-light">
+          <img
+            class="img-fluid card-img-top image-class"
+            src="{{ recipe.imagePath }}"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5>
+            <p class="card-text">{{ recipe.description }}</p>
+          </div>
+        </div>
+      </a>
+    </ng-template>
+  </ngb-carousel>
+</div>
+
+<!-- masonry layout -->
+
+<div class="container mt-5 mb-5" *ngIf="!isLoading">
+  <h2 id="yourrecipes_header" class="mt-5 text-center" *ngIf="loggedIn">
+    Your Recipes
+  </h2>
+  <h2 id="yourrecipes_header" class="mt-5 text-center" *ngIf="!loggedIn">
+    More Recipes
+  </h2>
+  <p id="yourrecipes_p" class="text-center" *ngIf="!loggedIn">
+    Below is more recipes made and shared by users. Feel free to click on a card
+    to view more details of a recipe you're interested in.
+  </p>
+</div>
+
+<ngx-masonry [options]="masonryOptions" class="masonry-grid">
+  <div *ngIf="!loggedIn">
     <div
-      class="carousel-item"
-      *ngFor="let recipe of getActiveRecipes(); let i = index"
-      [class.active]="i === 0"
+      ngxMasonryItem
+      class="masonry-item"
+      *ngFor="let recipe of todayRecipes"
     >
-      <div class="card">
-        <div class="cardimg-wrapper">
-          <img [src]="recipe.imagePath" alt="..." />
+      <a [routerLink]="['/recipes', recipe.name]">
+        <div class="card recipe-card card-item bg-light">
+          <img
+            [src]="recipe.imagePath"
+            class="card-img-top"
+            alt="{{ recipe.name }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ recipe.name }}</h5>
+            <small>{{ recipe.description }}</small>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">{{ recipe.name }}</h5>
-          <p class="card-text">{{ recipe.description }}</p>
-          <a [routerLink]="['/recipes', recipe.name]" class="btn btn-primary"
-            >View Recipe</a
-          >
-        </div>
+      </a>
+    </div>
+
+    <div *ngIf="loggedIn">
+      <div *ngFor="let recipe of recipes">
+        <a [routerLink]="['/recipes', recipe.name]">
+          <div class="card recipe-card card-item">
+            <img
+              [src]="recipe.imagePath"
+              class="card-img-top"
+              alt="{{ recipe.name }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title text-center">{{ recipe.name }}</h5>
+              <small>{{ recipe.description }}</small>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
 
-  <button (click)="prev()" class="carousel-control-prev" type="button">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button (click)="next()" class="carousel-control-next" type="button">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
-
-<div class="container mt-5 mb-5" *ngIf="!isLoading">
-  <h2 id="yourrecipes_header" class="mt-5 text-center">Your Recipes</h2>
-</div>
-
-<div class="container masonry-container" *ngIf="!isLoading">
-  <div *ngFor="let recipe of recipes">
-    <a [routerLink]="['/recipes', recipe.name]">
+  <div ngxMasonryItem class="masonry-item">
+    <a [routerLink]="['/recipes', 'add']">
       <div class="card recipe-card card-item" style="width: 20rem">
         <img
-          [src]="recipe.imagePath"
+          src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
           class="card-img-top"
-          alt="{{ recipe.name }}"
+          alt="..."
         />
         <div class="card-body">
-          <h5 class="card-title text-center">{{ recipe.name }}</h5>
-          <small>{{ recipe.description }}</small>
+          <h5 class="card-title text-center">Add a recipe</h5>
+          <small>Create a new recipe</small>
         </div>
       </div>
     </a>
   </div>
-
-  <a [routerLink]="['/recipes', 'add']">
-    <div class="card recipe-card card-item" style="width: 20rem">
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title text-center">Add a recipe</h5>
-        <small>Create a new recipe</small>
-      </div>
-    </div>
-  </a>
-</div>
+</ngx-masonry>

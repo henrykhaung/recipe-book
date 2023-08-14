@@ -12,3 +12,7 @@
 [class^="fab"] {
   font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands" !important;
 }
+
+body {
+  background-color: #fdf6f0 !important;
+}

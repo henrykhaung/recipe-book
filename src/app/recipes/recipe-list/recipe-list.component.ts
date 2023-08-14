@@ -39,6 +39,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       this.data.fetchRecipes().subscribe((recipes) => {
         this.recipes = this.recipeService.getRecipes();
       });
+      console.log(this.recipes);
     }
 
     this.deleteForm = this.fb.group({

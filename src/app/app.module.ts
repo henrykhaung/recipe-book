@@ -29,6 +29,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     DragDropModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    NgxMasonryModule,
   ],
   providers: [
     ShoppingListService,
