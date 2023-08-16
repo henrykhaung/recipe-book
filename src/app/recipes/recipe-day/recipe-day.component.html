@@ -22,9 +22,9 @@
   >
     <ng-template *ngFor="let recipe of todayRecipes" ngbSlide>
       <a [routerLink]="['/todays-recipes', recipe.name]">
-        <div class="card h-100 w-75 mx-auto d-block bg-light">
+        <div class="card carousel-card bg-light">
           <img
-            class="img-fluid card-img-top image-class"
+            class="card-img-top"
             src="{{ recipe.imagePath }}"
             alt="Recipe Image"
           />

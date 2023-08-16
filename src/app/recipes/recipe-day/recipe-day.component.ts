@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
-  trigger,
-  query,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../recipe.model';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -19,38 +18,12 @@ import {
   NgbSlideEventSource,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMasonryOptions } from 'ngx-masonry';
-import { auto } from '@popperjs/core';
-
-export const fadeAnimation = trigger('fadeAnimation', [
-  transition('* => *', [
-    query(':enter', [style({ opacity: 0 })], { optional: true }),
-    query(':enter', [style({ position: 'absolute' })], { optional: true }),
-    query(
-      ':leave',
-      [
-        style({ opacity: 1 }),
-        animate('0.3s', style({ opacity: 0 })),
-        style({ position: 'absolute' }),
-      ],
-      { optional: true }
-    ),
-    query(
-      ':enter',
-      [
-        style({ opacity: 0 }),
-        animate('0.3s', style({ opacity: 1 })),
-        style({ position: 'relative' }),
-      ],
-      { optional: true }
-    ),
-  ]),
-]);
 
 @Component({
   selector: 'app-recipe-day',
   templateUrl: './recipe-day.component.html',
   styleUrls: ['./recipe-day.component.css'],
-  animations: [fadeAnimation],
+  encapsulation: ViewEncapsulation.None,
 })
 export class RecipeDayComponent implements OnInit, OnDestroy {
   masonryOptions: NgxMasonryOptions = {
@@ -97,6 +70,7 @@ export class RecipeDayComponent implements OnInit, OnDestroy {
       }
       this.data.fetchServerRecipes().subscribe((recipes) => {
         this.todayRecipes = this.recipeService.getRecipes();
+        console.log('hey');
       });
       this.isLoading = false;
     });
