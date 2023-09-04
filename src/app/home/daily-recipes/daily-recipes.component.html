@@ -1,0 +1,39 @@
+<app-header></app-header>
+<div class="container mt-3">
+  <h1 id="recipeday_header" class="mt-5 text-center">Recipes of the Day</h1>
+  <p id="recipeday_p" class="text-center">
+    Wondering what to make today? Maybe try some of these recipes below!
+  </p>
+
+  <div class="text-center mt-5">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+  </div>
+</div>
+
+<!-- copied from Ngbootstrap docs -->
+<div class="container">
+  <ngb-carousel
+    #carousel
+    [interval]="5000"
+    [pauseOnFocus]="pauseOnFocus"
+    pauseOnHover="pauseOnHover"
+    [showNavigationIndicators]="false"
+    class="next-prev-carousel"
+  >
+    <ng-template *ngFor="let recipe of todayRecipes" ngbSlide>
+      <a [routerLink]="['/todays-recipes', recipe.name]">
+        <div class="card carousel-card bg-light">
+          <img
+            class="card-img-top"
+            src="{{ recipe.imagePath }}"
+            alt="Recipe Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5>
+            <p class="card-text">{{ recipe.description }}</p>
+          </div>
+        </div>
+      </a>
+    </ng-template>
+  </ngb-carousel>
+</div>

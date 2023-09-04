@@ -1,18 +1,25 @@
 <div class="list-group">
-    <a style="cursor: pointer;"
+  <a
+    style="cursor: pointer"
     [routerLink]="[recipename]"
     routerLinkActive="active"
-    class="list-group-item list-group-item-action">
-      <div class="container">
-        <div class="row d-flex justify-content-center align-items-center">
-          <div class="col">
-            <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-            <p class="list-group-item-text">{{ recipe.description }}</p>
-          </div>
-          <div class="col text-center">
-            <img [src]="recipe.imagePath" alt="{{ recipe.name }} image" class="img-responsive" style="max-height: 100px;">
-          </div>
+    class="list-group-item list-group-item-action"
+  >
+    <div class="container">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col">
+          <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+          <p class="list-group-item-text">{{ recipe.description }}</p>
+        </div>
+        <div class="col text-center">
+          <img
+            [src]="recipe.imagePath"
+            alt="{{ recipe.name }} image"
+            class="img-responsive"
+            style="max-height: 100px"
+          />
         </div>
       </div>
-    </a>
+    </div>
+  </a>
 </div>

@@ -7,7 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -32,4 +32,21 @@ export class AuthGuard implements CanActivate {
       })
     );
   }
+
+  // canActivate(
+  //   next: ActivatedRouteSnapshot,
+  //   state: RouterStateSnapshot
+  // ):
+  //   | Observable<boolean | UrlTree>
+  //   | Promise<boolean | UrlTree>
+  //   | boolean
+  //   | UrlTree {
+  //   if (this.authService.isLoggedIn()) {
+  //     // User is logged in, redirect to HomeUserModule
+  //     return this.router.parseUrl('/' + next.params.name + '/home');
+  //   } else {
+  //     // User is not logged in, redirect to HomeModule
+  //     return this.router.parseUrl('/home');
+  //   }
+  // }
 }

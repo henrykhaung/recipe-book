@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+
+/* card carousel */
+/* .image-class {
+        object-position: center;
+        object-fit: cover;
+        height: 550px;
+        width: 100%;
+      } */
+
+.carousel-card {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.carousel-card .card-img-top {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.carousel-card .card-body {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.card {
+  border-radius: 20px;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(0.5);
+}
+
+/* card carousel END*/
+
+/* headers tags */
+#recipeday_p {
+  font-size: larger;
+}
+
+#recipeday_header {
+  font-weight: 600;
+}
+/* headers tags END */
+
+* {
+  box-sizing: border-box;
+}
+
+.card {
+  border-radius: 20px;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+}
+
+a {
+  text-decoration: none;
+}

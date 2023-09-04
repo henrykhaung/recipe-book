@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
-import { DataService } from 'src/app/shared/data.service';
+import { Recipe } from '../../models/recipe.model';
+import { RecipeService } from '../../services/recipe.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -26,7 +26,6 @@ export class RecipeEditComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.recipeName = params['name'];
       this.editMode = params['name'] != null;
-      // this.initForm();
     });
     this.initForm();
   }

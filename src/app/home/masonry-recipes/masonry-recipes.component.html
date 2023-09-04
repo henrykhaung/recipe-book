@@ -1,0 +1,103 @@
+<!-- NO USER START -->
+<div class="container mt-5 mb-5" *ngIf="!loggedIn">
+  <div *ngIf="!isLoading">
+    <h2 id="yourrecipes_header" class="mt-5 text-center" *ngIf="!loggedIn">
+      More Recipes
+    </h2>
+    <p id="yourrecipes_p" class="text-center" *ngIf="!loggedIn">
+      Below is more recipes made and shared by users. Feel free to click on a card
+      to view more details of a recipe you're interested in.
+    </p>
+  </div>
+</div>
+
+<div *ngIf="!loggedIn">
+  <ngx-masonry [options]="masonryOptions" class="masonry-grid">
+    <div
+      ngxMasonryItem
+      class="masonry-item"
+      *ngFor="let recipe of todayRecipes"
+    >
+      <a [routerLink]="['/recipes', recipe.name]">
+        <div class="card recipe-card card-item">
+          <img
+            [src]="recipe.imagePath"
+            class="card-img-top"
+            alt="{{ recipe.name }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ recipe.name }}</h5>
+            <small>{{ recipe.description }}</small>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div ngxMasonryItem class="masonry-item">
+      <a [routerLink]="['/recipes', 'add']">
+        <div class="card recipe-card card-item" style="width: 20rem">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">Add a recipe</h5>
+            <small>Create a new recipe</small>
+          </div>
+        </div>
+      </a>
+    </div>
+  </ngx-masonry>
+</div>
+<!-- NO USER END -->
+
+
+<!-- LOGGED IN START -->
+<div class="container mt-5 mb-5" *ngIf="loggedIn">
+  <div *ngIf="!isLoading">
+    <h2 id="yourrecipes_header" class="mt-5 text-center" *ngIf="loggedIn">
+      Your Recipes
+    </h2>
+    <p id="yourrecipes_p" class="text-center" *ngIf="loggedIn">
+      Below is a layout of all recipes that you have created!
+    </p>
+  </div>
+</div>
+
+<div *ngIf="loggedIn">
+  <ngx-masonry [options]="masonryOptions" class="masonry-grid">
+    <div ngxMasonryItem class="masonry-item" *ngFor="let recipe of recipes">
+      <a [routerLink]="['/recipes', recipe.name]">
+        <div class="card recipe-card card-item">
+          <img
+            [src]="recipe.imagePath"
+            class="card-img-top"
+            alt="{{ recipe.name }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ recipe.name }}</h5>
+            <small>{{ recipe.description }}</small>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div ngxMasonryItem class="masonry-item">
+      <a [routerLink]="['/recipes', 'add']">
+        <div class="card recipe-card card-item" style="width: 20rem">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/992/992651.png"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">Add a recipe</h5>
+            <small>Create a new recipe</small>
+          </div>
+        </div>
+      </a>
+    </div>
+  </ngx-masonry>
+</div>
+<!-- LOGGED IN END -->

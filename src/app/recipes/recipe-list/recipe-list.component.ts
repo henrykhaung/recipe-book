@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../../models/recipe.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { RecipeService } from '../recipe.service';
+import { RecipeService } from '../../services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { DataService } from 'src/app/shared/data.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -35,12 +35,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       }
     );
     this.recipes = this.recipeService.getRecipes();
-    if (this.recipes.length == 0) {
-      this.data.fetchRecipes().subscribe((recipes) => {
-        this.recipes = this.recipeService.getRecipes();
-      });
-      console.log(this.recipes);
-    }
+    console.log('in recipe list', this.recipes);
 
     this.deleteForm = this.fb.group({
       recipes: this.fb.array([]),
