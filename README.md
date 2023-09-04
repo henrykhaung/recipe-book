@@ -1,4 +1,4 @@
-Website link: [https://recipe-book-8c0fb.web.app]
+Website link: https://recipe-book-8c0fb.web.app
 
 # RecipeBook
 
