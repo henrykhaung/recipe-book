@@ -1,5 +1,7 @@
 Website link: https://recipe-book-8c0fb.web.app
 
+Currently using Firebase for backend. In the future, will migrate to MongoDB.
+
 # RecipeBook
 
 This project's purpose is to learn Angular.
