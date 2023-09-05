@@ -7,13 +7,20 @@ export class ShoppingListService {
 
   ingredientSelected = new Subject<Ingredient>();
 
-  private ingredients: Ingredient[] = [
-    new Ingredient('Bananas', 5, 'lb'),
-    new Ingredient('Oranges', 10, 'oz'),
-  ];
+  // private ingredients: Ingredient[] = [
+  //   new Ingredient('Bananas', 5, 'lb'),
+  //   new Ingredient('Oranges', 10, 'oz'),
+  // ];
+
+  private ingredients: Ingredient[] = [];
+
+  setShoppingList(shoppingList: Ingredient[]) {
+    this.ingredients = shoppingList ? shoppingList.slice() : [];
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
 
   getIngredients() {
-    return this.ingredients.slice();
+    return this.ingredients ? this.ingredients.slice() : []
   }
 
   getIngredient(index: number) {

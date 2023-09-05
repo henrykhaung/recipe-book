@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  UrlSegment,
+} from '@angular/router';
 import { Recipe } from '../models/recipe.model';
+import { BehaviorSubject, filter } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +17,18 @@ export class HomeComponent {
   recipes: Recipe[];
   todayRecipes: Recipe[];
 
-  constructor(private route: ActivatedRoute) {}
+  isHomeDetail$ = new BehaviorSubject<boolean>(false);
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const result =
+          event.urlAfterRedirects.includes('today-recipe') ||
+          event.urlAfterRedirects.includes('more-recipe');
+        this.isHomeDetail$.next(result);
+      });
+  }
 
   ngOnInit() {
     this.route.data.subscribe(

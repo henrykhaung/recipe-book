@@ -99,10 +99,10 @@ export class AuthService {
   logout() {
     this.user.next(null);
     localStorage.removeItem('userData');
-    this.route.navigate(['']);
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
+    this.route.navigate(['/home']);
   }
 
   autoLogout(expiration: number) {
@@ -149,7 +149,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    console.log('helloaldkfjasldf;', this.user.getValue());
     return this.user.getValue() !== null;
   }
 }

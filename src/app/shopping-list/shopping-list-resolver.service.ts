@@ -5,15 +5,15 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { Recipe } from 'src/app/models/recipe.model';
+import { Ingredient } from '../models/ingredient.model';
 
 @Injectable()
-export class RecipeResolver implements Resolve<Recipe[]> {
+export class ShoppingListResolver implements Resolve<Ingredient[]> {
   constructor(
     private dataService: DataService
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.dataService.fetchRecipes();
+    return this.dataService.fetchShoppingList();
   }
 }

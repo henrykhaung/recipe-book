@@ -1,10 +1,16 @@
-<div>
+<app-header></app-header>
+
+<div *ngIf="!(isHomeDetail$ | async)">
   <app-daily-recipes [todayRecipes]="todayRecipes"></app-daily-recipes>
 </div>
 
-<div>
+<div *ngIf="!(isHomeDetail$ | async)">
   <app-masonry-recipes
     [todayRecipes]="todayRecipes"
     [recipes]="recipes"
   ></app-masonry-recipes>
+</div>
+
+<div class="mt-5 ms-5 me-5">
+  <router-outlet></router-outlet>
 </div>

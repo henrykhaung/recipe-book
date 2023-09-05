@@ -10,6 +10,7 @@ import {
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Ingredient } from 'src/app/models/ingredient.model';
 import { ShoppingListService } from '../../services/shopping-list.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -29,6 +30,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private shoppinglistService: ShoppingListService,
+    private dataService: DataService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
   ) {}
@@ -110,8 +112,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         this.editedIngredientIndex,
         newIngredient
       );
+      this.dataService.storeShoppingList();
     } else {
       this.shoppinglistService.addIngredient(newIngredient);
+      this.dataService.storeShoppingList();
     }
 
     this.editMode = false;
@@ -120,6 +124,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onDelete() {
     this.shoppinglistService.deleteIngredient(this.editedIngredientIndex);
+    this.dataService.storeShoppingList();
     this.onClear();
   }
 

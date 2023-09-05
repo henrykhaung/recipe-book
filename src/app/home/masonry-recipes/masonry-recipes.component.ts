@@ -26,10 +26,8 @@ export class MasonryRecipesComponent implements OnInit, OnDestroy {
   loggedIn = false;
   isLoading = true;
 
-  constructor(
-    private route: ActivatedRoute,
-    private authService: AuthService
-  ) {}
+  constructor(private route: ActivatedRoute, public authService: AuthService) {}
+  // authService must be public to resolve issue of user logging out and home page not displaying correct headers
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {

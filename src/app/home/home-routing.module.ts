@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DailyRecipesResolver } from './daily-recipes-resolver.service';
 import { MasonryRecipesResolver } from './masonry-recipes-resolver.service';
 import { HomeComponent } from './home.component';
-import { AuthGuard } from '../auth/auth.guard';
+import { HomeDetailComponent } from './home-detail/home-detail.component';
 
 const routes: Routes = [
   {
@@ -14,6 +14,13 @@ const routes: Routes = [
       recipes: MasonryRecipesResolver,
       todayRecipes: DailyRecipesResolver,
     },
+    children: [
+      {
+        path: 'today-recipe/:name',
+        component: HomeDetailComponent,
+      },
+      { path: 'more-recipes/:name', component: HomeDetailComponent },
+    ],
   },
 ];
 

@@ -1,4 +1,3 @@
-<app-header></app-header>
 <div class="container mt-3">
   <h1 id="recipeday_header" class="mt-5 text-center">Recipes of the Day</h1>
   <p id="recipeday_p" class="text-center">
@@ -21,7 +20,7 @@
     class="next-prev-carousel"
   >
     <ng-template *ngFor="let recipe of todayRecipes" ngbSlide>
-      <a [routerLink]="['/todays-recipes', recipe.name]">
+      <a [routerLink]="['/home/today-recipe', recipe.name]">
         <div class="card carousel-card bg-light">
           <img
             class="card-img-top"

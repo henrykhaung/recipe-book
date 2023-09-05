@@ -8,6 +8,7 @@ import { ShoppingListComponent } from './shopping-list.component';
 import { ShoppingEditComponent } from './shopping-edit/shopping-edit.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ShoppingListResolver } from './shopping-list-resolver.service';
 
 @NgModule({
   declarations: [ShoppingListComponent, ShoppingEditComponent],
@@ -18,5 +19,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
+  providers: [ShoppingListResolver]
 })
 export class ShoppingListModule {}
